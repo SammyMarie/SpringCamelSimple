@@ -32,9 +32,9 @@ dependencies {
     }
 
     compile 'org.projectlombok:lombok'
-    compile 'org.apache.activemq:activemq-camel:5.15.3'
     compile "org.apache.camel:camel-jms-starter:${camelVersion}"
     compile "org.apache.camel:camel-ftp-starter:${camelVersion}"
+    compile "org.apache.activemq:activemq-camel:${activeMQVersion}"
     compile 'org.springframework.boot:spring-boot-starter-undertow'
     //compile "org.apache.camel:camel-restlet-starter:${camelVersion}"
     compile "org.apache.camel:camel-metrics-starter:${camelVersion}"
