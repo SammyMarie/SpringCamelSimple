@@ -1,0 +1,11 @@
+{
+  "HouseInfo": {
+    "-infotype": "LoanHouse",
+    "nationalID": "B56789",
+    "address": "9 Bowdoin St, Boston, MA 02114. United States",
+    "bedroom": "5",
+    "bathroom": "3",
+    "landSize": "200",
+    "appraisedValue": "0"
+  }
+}

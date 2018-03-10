@@ -1,0 +1,47 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath "org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}"
+    }
+}
+
+apply plugin: 'java'
+apply plugin: 'idea'
+apply plugin: 'org.springframework.boot'
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+jar{
+    group 'com.sammy'
+    version '1.0-SNAPSHOT'
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testCompile "org.apache.camel:camel-test-spring:${camelVersion}"
+    testCompile 'org.springframework.boot:spring-boot-starter-test'
+
+    compile("org.springframework.boot:spring-boot-starter-web"){
+        exclude module: "spring-boot-starter-tomcat"
+    }
+
+    compile 'org.projectlombok:lombok'
+    compile 'org.apache.activemq:activemq-camel:5.15.3'
+    compile "org.apache.camel:camel-jms-starter:${camelVersion}"
+    compile "org.apache.camel:camel-ftp-starter:${camelVersion}"
+    compile 'org.springframework.boot:spring-boot-starter-undertow'
+    //compile "org.apache.camel:camel-restlet-starter:${camelVersion}"
+    compile "org.apache.camel:camel-metrics-starter:${camelVersion}"
+    compile "org.apache.camel:camel-spring-boot-starter:${camelVersion}"
+    compile "org.apache.camel:camel-swagger-java-starter:${camelVersion}"
+}
+
+task wrapper(type : Wrapper){
+    gradleVersion = '4.5.1'
+}
