@@ -1,0 +1,11 @@
+{
+  "HouseInfo": {
+    "-infotype": "LoanHouse",
+    "nationalID": "A234567",
+    "address": "100 East Davie Street Raleigh, NC 27601. United States",
+    "bedroom": "3",
+    "bathroom": "1",
+    "landSize": "100",
+    "appraisedValue": "0"
+  }
+}

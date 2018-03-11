@@ -1,0 +1,10 @@
+{
+  "CustInfo": {
+    "-infotype": "LoanCustomer",
+    "nationalID": "B56789",
+    "firstName": "John",
+    "lastName": "Doe",
+    "age": "40",
+    "occupation": "Manager"
+  }
+}
