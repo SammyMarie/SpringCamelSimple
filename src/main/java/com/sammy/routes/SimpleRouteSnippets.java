@@ -1,6 +1,7 @@
 package com.sammy.routes;
 
 import com.sammy.config.BaseRoutes;
+import com.sammy.processor.RecipientsBean;
 import com.sammy.processor.SampleProcessor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -20,16 +21,22 @@ public class SimpleRouteSnippets extends BaseRoutes {
         super.configure();
 
         from("file:src/main/resources/data/inbox")
-                .routeId("queueReceiver")
-                .process(sampleProcessor)
+            .routeId("queueReceiver")
+            .process(sampleProcessor)
                 .choice()
                     .when(header("CamelFileName").endsWith(".xml"))
-                    .to("activemq:queue:incomingXMLOrders")
+                        .to("{{activemq.xmlOrders}}")
+                    .when(header("CamelFileName").endsWith(".json"))
+                        .bean(RecipientsBean.class)
+                        .to("{{activemq.jsonOrders}}")
+                    .when(header("CamelFileName").regex("^.*(csv|csl)$"))
+                        .to("{{activemq.csvOrders}}")
                 .otherwise()
-                    .inOnly("activemq:queue:incomingOrders");
+                    .inOnly("{{activemq.badOrders}}").stop();
 
-        from("activemq:queue:incomingOrders")
-                .routeId("queueSender")
-                .to("{{local.ftp.URI}}");
+        from("{{activemq.jsonOrders}}")
+            .routeId("queueSender")
+            .wireTap("{{activemq.auditQueue}}")
+            .to("{{local.ftp.URI}}");
     }
 }
