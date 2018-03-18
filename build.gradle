@@ -38,6 +38,7 @@ dependencies {
     compile 'org.springframework.boot:spring-boot-starter-undertow'
     //compile "org.apache.camel:camel-restlet-starter:${camelVersion}"
     compile "org.apache.camel:camel-metrics-starter:${camelVersion}"
+    compile "org.apache.camel:camel-jsonpath-starter:${camelVersion}"
     compile "org.apache.camel:camel-spring-boot-starter:${camelVersion}"
     compile "org.apache.camel:camel-swagger-java-starter:${camelVersion}"
 }
