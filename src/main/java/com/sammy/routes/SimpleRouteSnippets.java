@@ -12,6 +12,7 @@ import org.springframework.stereotype.Component;
 public class SimpleRouteSnippets extends BaseRoutes {
 
     private final SampleProcessor sampleProcessor;
+    private static final String MESSAGE_NAME = "CamelFileName";
 
     @Autowired
     public SimpleRouteSnippets(SampleProcessor sampleProcessor) {
@@ -26,12 +27,12 @@ public class SimpleRouteSnippets extends BaseRoutes {
             .routeId("queueReceiver")
             .process(sampleProcessor)
                 .choice()
-                    .when(header("CamelFileName").endsWith(".xml"))
+                    .when(header(MESSAGE_NAME).endsWith(".xml"))
                         .to("{{activemq.xmlOrders}}")
-                    .when(header("CamelFileName").endsWith(".json"))
+                    .when(header(MESSAGE_NAME).endsWith(".json"))
                         .bean(RecipientsBean.class)
                         .to("{{activemq.jsonOrders}}")
-                    .when(header("CamelFileName").regex("^.*(csv|csl)$"))
+                    .when(header(MESSAGE_NAME).regex("^.*(csv|csl)$"))
                         .to("{{activemq.csvOrders}}")
                 .otherwise()
                     .inOnly("{{activemq.badOrders}}").stop();
