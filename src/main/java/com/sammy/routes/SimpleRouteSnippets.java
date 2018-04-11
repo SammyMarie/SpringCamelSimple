@@ -3,13 +3,15 @@ package com.sammy.routes;
 import com.sammy.config.BaseRoutes;
 import com.sammy.processor.RecipientsBean;
 import com.sammy.processor.SampleProcessor;
+import org.apache.camel.Exchange;
+import org.apache.camel.Expression;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
 public class SimpleRouteSnippets extends BaseRoutes {
 
-    private SampleProcessor sampleProcessor;
+    private final SampleProcessor sampleProcessor;
 
     @Autowired
     public SimpleRouteSnippets(SampleProcessor sampleProcessor) {
@@ -38,5 +40,17 @@ public class SimpleRouteSnippets extends BaseRoutes {
             .routeId("queueSender")
             .wireTap("{{activemq.auditQueue}}")
             .to("{{local.ftp.URI}}");
+
+        from("direct:start").transform(new Expression() {
+            @Override
+            public <T> T evaluate(Exchange exchange, Class<T> type) {
+
+                String body = exchange.getIn().getBody(String.class);
+                body = body.replaceAll("\n", "<br />");
+                body = "<body>" + body + "</body>";
+
+                return (T) body;
+            }
+        }).to("log:result");
     }
 }
