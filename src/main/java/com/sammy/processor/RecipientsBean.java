@@ -6,7 +6,7 @@ import org.apache.camel.jsonpath.JsonPath;
 public class RecipientsBean {
 
     @RecipientList
-    public String[] recipients(@JsonPath("$..infotype") String customerInfo){
+    public String[] recipients(@JsonPath("$..-infotype") String customerInfo){
 
         if(isLoanCustomer(customerInfo)){
             return new String[]{"{{activemq.accountQueue}}", "{{activemq.customerServices}}"};
